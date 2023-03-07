@@ -83,7 +83,7 @@ public class DocumentCollection implements Serializable {
                         }
                     }
 
-                    System.out.println(row[0]);
+//                    System.out.println(row[0]);
 
                     tv.article_id = Integer.parseInt(row[0]);
                     tv.label = row[2];

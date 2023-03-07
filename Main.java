@@ -8,7 +8,7 @@ public class Main {
 
         articles = new DocumentCollection("learn-ai-bbc/BBC News Train.csv", "articles");
 
-        
+
     }
 
 }
