@@ -97,7 +97,7 @@ public class DocumentCollection implements Serializable {
             }
         }
 
-
+        // THIS "ELSE" CAN BE IGNORED FOR THE FINAL PROJECT
         else{
             try {
                 Scanner my_scanner = new Scanner(new File(file));
