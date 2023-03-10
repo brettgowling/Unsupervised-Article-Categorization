@@ -7,15 +7,15 @@ public class Main {
     public static void main(String[] args){
 
         System.out.println("Starting..");
-
+        // currently testing with demo data
+        //articles = new DocumentCollection("learn-ai-bbc/testing.csv", "articles");
         articles = new DocumentCollection("learn-ai-bbc/BBC News Train.csv", "articles");
 
         articles.normalize(articles);
 
-        // select 5 centroids at random
-        KMeansClustering model = new KMeansClustering(articles);
-        //model.fit(k=5)
-        //model.predict(my_new_article)
+        // uncomment to make it work
+        KMeansClustering model = new KMeansClustering(articles.getAllDocuments(), 5);
+    
 
         System.out.println("Ending...");
     }

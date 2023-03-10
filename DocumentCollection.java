@@ -27,8 +27,12 @@ public class DocumentCollection implements Serializable {
             "would", "you", "your", "yours", "yes" };
 
         
-    public TextVector getDocumentById(int id){
+    public TextVector getDocumentById(int id) {
         return documents.get(id);
+    }
+    
+    public HashMap<Integer, ArticleVector> getAllDocuments(){
+        return this.documents;
     }
     public int getAverageDocumentLength(){
         int sum = 0;
