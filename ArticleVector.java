@@ -10,10 +10,14 @@ public class ArticleVector extends TextVector{
     private HashMap<String, Double> normalizedVector = new HashMap<String, Double>();
 
 
+    public String getLabel() {
+        return this.label;
+    }
+
 
     @Override
     public Set<Map.Entry<String, Double>> getNormalizedVectorEntrySet() {
-        return null;
+        return this.normalizedVector.entrySet();
     }
 
     @Override

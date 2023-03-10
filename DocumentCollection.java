@@ -5,7 +5,7 @@ import java.util.*;
 
 public class DocumentCollection implements Serializable {
 
-    private HashMap<Integer, TextVector> documents = new HashMap<Integer, TextVector>();
+    private HashMap<Integer, ArticleVector> documents = new HashMap<Integer, ArticleVector>();
 
     public static  String noiseWordArray[] = {"a", "about", "above", "all", "along",
             "also", "although", "am", "an", "and", "any", "are", "aren't", "as", "at",
@@ -24,9 +24,9 @@ public class DocumentCollection implements Serializable {
             "too", "under", "until", "unto", "upon", "us", "very", "was", "wasn't",
             "we", "were", "what", "when", "where", "whereby", "wherein", "whether",
             "which", "while", "who", "whom", "whose", "why", "with", "without",
-            "would", "you", "your", "yours", "yes"};
+            "would", "you", "your", "yours", "yes" };
 
-
+        
     public TextVector getDocumentById(int id){
         return documents.get(id);
     }
@@ -40,10 +40,10 @@ public class DocumentCollection implements Serializable {
     public int getSize(){
         return documents.size();
     }
-    public Collection<TextVector> getDocuments(){
+    public Collection<ArticleVector> getDocuments(){
         return documents.values();
     }
-    public Set<Map.Entry<Integer, TextVector>> getEntrySet(){
+    public Set<Map.Entry<Integer, ArticleVector>> getEntrySet(){
         return documents.entrySet();
     }
     public int getDocumentFrequency(String word){
@@ -93,58 +93,6 @@ public class DocumentCollection implements Serializable {
                 my_scanner.close();
             }
             catch (FileNotFoundException e){
-                e.printStackTrace();
-            }
-        }
-
-        // THIS "ELSE" CAN BE IGNORED FOR THE FINAL PROJECT
-        else{
-            try {
-                Scanner my_scanner = new Scanner(new File(file));
-
-                if (my_scanner.hasNextLine()) {
-                    curr = my_scanner.nextLine();
-                }
-                while (my_scanner.hasNextLine()){
-                    if(curr.startsWith(".I")) {
-                        index = Integer.valueOf(curr.split(" ")[1]);
-
-                        while (my_scanner.hasNextLine()) {
-                            curr = my_scanner.nextLine();
-                            if (curr.startsWith(".W")) {
-                                break;
-                            }
-                        }
-                        TextVector tv;
-                        if(is_document.equalsIgnoreCase("document")){
-                            tv = new DocumentVector();
-                        }
-                        else{
-                            tv = new QueryVector();
-                        }
-                        while (my_scanner.hasNextLine()) {
-                            curr = my_scanner.nextLine();
-                            if (curr.startsWith(".I")) {
-                                break;
-                            }
-                            for (String word:curr.split("[^a-zA-Z]+")){
-                                word = word.toLowerCase();
-                                if(!isNoiseWord(word) && (word.length() > 1)){
-                                    tv.add(word);
-                                }
-                            }
-                        }
-                        if(is_document.equalsIgnoreCase("document")) {
-                            documents.put(index, tv);
-                        }
-                        else{
-                            documents.put(index_for_queries, tv);
-                            index_for_queries++;
-                        }
-                    }
-                }
-                my_scanner.close();
-            } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         }
