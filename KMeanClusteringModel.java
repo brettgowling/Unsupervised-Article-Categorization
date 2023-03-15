@@ -16,7 +16,7 @@ public class KMeanClusteringModel {
         CosineDistance cosine = new CosineDistance();
 
         boolean isCentroidChanging = true;
-        HashMap<Integer, ArrayList<TextVector>> clusterToArticles = new HashMap<>();
+        HashMap<Integer, ArrayList<ArticleVector>> clusterToArticles = new HashMap<>();
 
         
         while (isCentroidChanging) {
@@ -45,7 +45,7 @@ public class KMeanClusteringModel {
                 if (clusterToArticles.containsKey(closest_cluster)) {
                     clusterToArticles.get(closest_cluster).add(myArticle);
                 } else {
-                    ArrayList<TextVector> myArrayList = new ArrayList<>();
+                    ArrayList<ArticleVector> myArrayList = new ArrayList<>();
                     myArrayList.add(myArticle);
                     clusterToArticles.put(closest_cluster, myArrayList);
                 }
@@ -69,14 +69,14 @@ public class KMeanClusteringModel {
     }
     
 
-    private HashMap<Integer, TextVector> getUpdatedCentroids(HashMap<Integer, ArrayList<TextVector>> clusterToArticles) {
+    private HashMap<Integer, TextVector> getUpdatedCentroids(HashMap<Integer, ArrayList<ArticleVector>> clusterToArticles) {
         
         HashMap<Integer, TextVector> newCentroids = new HashMap<>();
         for (int i = 1; i <= this.k; i++) {
-            ArrayList<TextVector> articles = clusterToArticles.get(i);
+            ArrayList<ArticleVector> articles = clusterToArticles.get(i);
             HashSet<String> set = new HashSet<>();
             
-            for (TextVector tv : articles) {
+            for (ArticleVector tv : articles) {
                 for (Entry<String, Double> entry : tv.getNormalizedVectorEntrySet()) {
                     String word = entry.getKey();
                     set.add(word);
