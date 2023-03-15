@@ -37,7 +37,7 @@ public class DocumentVector extends TextVector{
     }
 
     public double getNormalizedFrequency(String word){
-        return normalizedVector.get(word);
+        return normalizedVector.getOrDefault(word, 0.0);
     }
 
 }
