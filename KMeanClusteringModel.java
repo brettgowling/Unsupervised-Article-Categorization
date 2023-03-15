@@ -75,6 +75,8 @@ public class KMeanClusteringModel {
             centroids = (HashMap<Integer, TextVector>) newCentroids.clone();
         }
 
+        Utils.analysis(clusterToArticles);
+
         
     }
     

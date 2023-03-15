@@ -90,7 +90,7 @@ public class Main {
         KMeanClusteringModel model = new KMeanClusteringModel(articles, 5);
         model.fitCentroids();
 
-        System.out.println(model.getWeightedPrecision(articles));
+        //System.out.println(model.getWeightedPrecision(articles));
 
         System.out.println("Ending...");
     }
