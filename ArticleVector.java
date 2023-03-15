@@ -62,6 +62,6 @@ public class ArticleVector extends TextVector{
 
     @Override
     public double getNormalizedFrequency(String word) {
-        return 0;
+         return normalizedVector.getOrDefault(word, 0.0);
     }
 }

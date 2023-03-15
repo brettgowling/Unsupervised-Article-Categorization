@@ -14,6 +14,8 @@ public class Main {
         // currently testing with demo data
         articles = new DocumentCollection("learn-ai-bbc/testing.csv", "articles");
         //articles = new DocumentCollection("learn-ai-bbc/BBC News Train.csv", "articles");
+        //articles = new DocumentCollection("learn-ai-bbc/BBC News Test.csv", "articles");
+
 
         articles.normalize(articles);
 

@@ -36,8 +36,12 @@ public class DocumentVector extends TextVector{
 
     }
 
-    public double getNormalizedFrequency(String word){
+    public double getNormalizedFrequency(String word) {
         return normalizedVector.getOrDefault(word, 0.0);
+    }
+
+    public void updateNormalizedVector(String curr_word, double norm_weight) {
+        normalizedVector.put(curr_word, norm_weight);
     }
 
 }
