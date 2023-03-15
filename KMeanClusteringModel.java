@@ -141,34 +141,34 @@ public class KMeanClusteringModel {
         return true;
     }
 
-    // public double getWeightedPrecision(DocumentCollection articles){
-    //     double total_weighted_precision = 0;
-    //     int total_size = 0;
-    //     for(ArrayList<Integer> cluster:this.clusterToArticles.values()){
-    //         total_size += cluster.size();
-    //     }
-    //     for(int cluster_num = 1; cluster_num <= this.k; cluster_num++){
-    //         ArrayList<Integer> cluster = this.clusterToArticles.get(cluster_num);
-    //         int cluster_size = cluster.size();
-    //         int TP = 0;
-    //         int FP = 0;
-    //         for(int i = 0; i < cluster.size(); i++){
-    //             for(int j = i + 1; j < cluster.size(); j++){
-    //                 if(Objects.equals(((ArticleVector) articles.getDocumentById(cluster.get(i))).getLabel(), ((ArticleVector) articles.getDocumentById(cluster.get(j))).getLabel())){
-    //                     TP += 1;
-    //                 }
-    //                 else{
-    //                     FP += 1;
-    //                 }
-    //             }
-    //         }
+    public double getWeightedPrecision(DocumentCollection articles){
+        double total_weighted_precision = 0;
+        int total_size = 0;
+        for(ArrayList<ArticleVector> cluster:this.clusterToArticles.values()){
+            total_size += cluster.size();
+        }
+        for(int cluster_num = 1; cluster_num <= this.k; cluster_num++){
+            ArrayList<ArticleVector> cluster = this.clusterToArticles.get(cluster_num);
+            int cluster_size = cluster.size();
+            int TP = 0;
+            int FP = 0;
+            for(int i = 0; i < cluster.size(); i++){
+                for(int j = i + 1; j < cluster.size(); j++){
+                    if(Objects.equals(((ArticleVector) articles.getDocumentById(cluster.get(i).article_id)).getLabel(), ((ArticleVector) articles.getDocumentById(cluster.get(j).article_id)).getLabel())){
+                        TP += 1;
+                    }
+                    else{
+                        FP += 1;
+                    }
+                }
+            }
 
-    //         double weighted_cluster_precision = ((double)cluster_size / total_size) * ((double)TP / ((double)TP + (double)FP));
-    //         System.out.println("Weightet_cluster_precision: " + weighted_cluster_precision);
-    //         total_weighted_precision += weighted_cluster_precision;
-    //     }
-    //     return total_weighted_precision;
-    // }
+            double weighted_cluster_precision = ((double)cluster_size / total_size) * ((double)TP / ((double)TP + (double)FP));
+            System.out.println("Weightet_cluster_precision: " + weighted_cluster_precision);
+            total_weighted_precision += weighted_cluster_precision;
+        }
+        return total_weighted_precision;
+    }
     
     private HashMap<Integer, TextVector> getRandomCentroids() {
         HashMap<Integer, TextVector> centroids = new HashMap<>();
