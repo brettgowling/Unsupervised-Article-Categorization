@@ -32,6 +32,16 @@ public class Main {
             myClusters.put(i+1, articles.getDocumentById(random_integers.get(i)));
         }
 
+        // This is just for testing. These articles are all business articles
+        // 1833, 154, 1101, 917, 2034
+//        myClusters.put(1, articles.getDocumentById(1833));
+//        myClusters.put(2, articles.getDocumentById(154));
+//        myClusters.put(3, articles.getDocumentById(1101));
+//        myClusters.put(4, articles.getDocumentById(917));
+//        myClusters.put(5, articles.getDocumentById(2034));
+
+
+
         CosineDistance cosine = new CosineDistance();
 
         for(ArticleVector myArticle: articles.getDocuments()){
@@ -64,13 +74,21 @@ public class Main {
             System.out.println("Final closest cluster: " + closest_cluster);
         }
 
-
         System.out.println("\n\n####################\n\n");
         for(int x = 0; x < myClusters.size(); x++){
             System.out.println("Cluster #" + (x+1) + ": size = " + articleToCluster.get(x+1).size());
         }
 
         System.out.println();
+
+        // This is just for my sanity in order to see how many articles we expect in each cluster
+        System.out.println("Expected cluster sizes:");
+        for(String string:articles.category_counts.keySet()){
+            System.out.println(string + ": " + articles.category_counts.get(string));
+        }
+
+
+
 
         // uncomment to make it work
 //        KMeansClustering model = new KMeansClustering(articles.getAllDocuments(), 5);

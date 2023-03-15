@@ -6,6 +6,7 @@ import java.util.*;
 public class DocumentCollection implements Serializable {
 
     private HashMap<Integer, ArticleVector> documents = new HashMap<Integer, ArticleVector>();
+    public HashMap<String, Integer> category_counts = new HashMap<>();
 
     public static  String noiseWordArray[] = {"a", "about", "above", "all", "along",
             "also", "although", "am", "an", "and", "any", "are", "aren't", "as", "at",
@@ -91,6 +92,12 @@ public class DocumentCollection implements Serializable {
 
                     tv.article_id = Integer.parseInt(row[0]);
                     tv.label = row[2];
+                    if(category_counts.get(tv.label) == null){
+                        category_counts.put(tv.label, 1);
+                    }
+                    else{
+                        category_counts.put(tv.label, category_counts.get(tv.label) + 1);
+                    }
 
                     documents.put(tv.article_id, tv);
                 }
