@@ -75,23 +75,37 @@ public class KMeansClustering {
 
     }
 
+
+    public void printClusterSize(HashMap<Integer, HashSet<Integer>> closestClusterMap){
+        int sum =0;
+
+        for (Entry<Integer, HashSet<Integer>> set : closestClusterMap.entrySet()) {
+            sum += set.getValue().size();
+        }
+        System.out.println("Cluster Size: " + sum);
+    }
+
     public void fit() {
-        this.clusters = this.generateKRandomClusters();
+        HashMap<Integer, HashMap<String, Double>> clusters = this.generateKRandomClusters();
 
         // HashMap<Integer, HashMap<String, Double>> clusters = this.generateKRandomClusters();
 
         // It will store for each cluster what the the articles (article num) are closest to them
-        HashMap<Integer, HashSet<Integer>> closestClusterMap = new HashMap<Integer, HashSet<Integer>>();
-        for (int cluster = 1; cluster <= this.k; cluster++) {
-            closestClusterMap.put(cluster, new HashSet<>());
-        }
+
+        //printClusterSize(closestClusterMap);
 
         boolean changeInClusters = true;
 
         int turn = 0;
         //if (true) {
-        while (turn++<10) {
+        while (turn++<1) {
         //while (changeInClusters) {
+
+            HashMap<Integer, HashSet<Integer>> closestClusterMap = new HashMap<Integer, HashSet<Integer>>();
+            for (int cluster = 1; cluster <= this.k; cluster++) {
+                closestClusterMap.put(cluster, new HashSet<>());
+            }
+
             for (Map.Entry<Integer, ArticleVector> articleEntry : articles.entrySet()) {
                 int articleID = articleEntry.getKey();
                 ArticleVector article = articleEntry.getValue();
@@ -99,17 +113,26 @@ public class KMeansClustering {
                 int closestClusterNumber = 1;
                 double closestClusterValue = Double.MAX_VALUE;
 
-                for (Entry<Integer, HashMap<String, Double>> clusterEntry : this.clusters.entrySet()) {
+                ArrayList<Double> distances = new ArrayList<>();
+
+                for (Entry<Integer, HashMap<String, Double>> clusterEntry : clusters.entrySet()) {
                     int clusterNumber = clusterEntry.getKey();
                     HashMap<String, Double> clusterVertices = clusterEntry.getValue();
 
                     double distance = this.calcuEuclidianDistance(clusterVertices, articleVertices);
+                    distances.add(distance);
+                    //System.out.println(distance);
 
                     if (distance < closestClusterValue) {
                         closestClusterValue = distance;
                         closestClusterNumber = clusterNumber;
                     }
                 }
+
+                //System.out.println();
+
+                System.out.println(articleID+"->"+closestClusterNumber);
+                System.out.println(distances);
 
                 HashSet<Integer> set = closestClusterMap.get(closestClusterNumber);
                 set.add(articleID);
@@ -120,16 +143,17 @@ public class KMeansClustering {
 
             // print the count of articles
             System.out.println("\n");
+            printClusterSize(closestClusterMap);
             for (Entry<Integer, HashSet<Integer>> set : closestClusterMap.entrySet()) {
                 System.out.println("For Cluster: " + set.getKey());
                 System.out.println(set.getValue().size());
             }
 
-            HashMap<Integer, HashMap<String, Double>> newClusters = (HashMap<Integer, HashMap<String, Double>>) this.generateUpdatedClusters(this.clusters,
+            HashMap<Integer, HashMap<String, Double>> newClusters = (HashMap<Integer, HashMap<String, Double>>) this.generateUpdatedClusters(clusters,
                     closestClusterMap).clone();
 
-            changeInClusters = !isBothClustersSame(this.clusters, newClusters);
-            this.clusters = (HashMap<Integer, HashMap<String, Double>>) newClusters.clone();
+            changeInClusters = !isBothClustersSame(clusters, newClusters);
+            clusters = (HashMap<Integer, HashMap<String, Double>>) newClusters.clone();
         }
 
 
