@@ -1,0 +1,32 @@
+CSC466-02 Winter 2023
+Brett Gowling, _____, ______
+
+This is the log.txt where we can update our individual tasks:
+
+
+Brett:
+
+    1.
+
+    2.
+
+    3.
+
+
+Saurav:
+
+    1.
+
+    2.
+
+    3.
+
+
+Blake:
+
+    1.
+
+    2.
+
+    3.
+    
