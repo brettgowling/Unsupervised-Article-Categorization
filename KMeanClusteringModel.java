@@ -164,10 +164,52 @@ public class KMeanClusteringModel {
             }
 
             double weighted_cluster_precision = ((double)cluster_size / total_size) * ((double)TP / ((double)TP + (double)FP));
-            System.out.println("Weightet_cluster_precision: " + weighted_cluster_precision);
+//            System.out.println("Weightet_cluster_precision for cluster #" + cluster_num + ": " + weighted_cluster_precision);
             total_weighted_precision += weighted_cluster_precision;
         }
         return total_weighted_precision;
+    }
+
+    public double getWeightedRecall(DocumentCollection articles){
+        double total_weighted_recall = 0;
+        int total_size = 0;
+        for(ArrayList<ArticleVector> cluster:this.clusterToArticles.values()){
+            total_size += cluster.size();
+        }
+        for(int cluster_num = 1; cluster_num <= this.k; cluster_num++){
+            ArrayList<ArticleVector> cluster = this.clusterToArticles.get(cluster_num);
+            int cluster_size = cluster.size();
+            int TP = 0;
+            int FP = 0;
+            int FN = 0;
+            for(int i = 0; i < cluster_size; i++){
+                for(int j = i + 1; j < cluster_size; j++){
+                    if(Objects.equals(((ArticleVector) articles.getDocumentById(cluster.get(i).article_id)).getLabel(), ((ArticleVector) articles.getDocumentById(cluster.get(j).article_id)).getLabel())){
+                        TP += 1;
+                    }
+                    else{
+                        FP += 1;
+                    }
+                }
+                for(int second_cluster_num = 1; second_cluster_num <= this.k; second_cluster_num++){
+                    if(second_cluster_num == cluster_num){
+                        continue;
+                    }
+                    ArrayList<ArticleVector> second_cluster = this.clusterToArticles.get(second_cluster_num);
+                    int second_cluster_size = second_cluster.size();
+                    for(int j = 0; j < second_cluster_size; j++){
+                        if(Objects.equals(((ArticleVector) articles.getDocumentById(cluster.get(i).article_id)).getLabel(), ((ArticleVector) articles.getDocumentById(second_cluster.get(j).article_id)).getLabel())) {
+                            FN += 1;
+                        }
+                    }
+                }
+            }
+
+            double weighted_cluster_recall = ((double)cluster_size / total_size) * ((double)TP / ((double)TP + (double)FN));
+//            System.out.println("Weightet_cluster_recall for cluster #" + cluster_num + ": " + weighted_cluster_recall);
+            total_weighted_recall += weighted_cluster_recall;
+        }
+        return total_weighted_recall;
     }
     
     private HashMap<Integer, TextVector> getRandomCentroids() {

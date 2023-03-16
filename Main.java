@@ -6,7 +6,9 @@ public class Main {
 
     public static DocumentCollection articles;
 
-
+    public static double get_f1_score(double precision, double recall){
+        return (2 * precision * recall) / (precision + recall);
+    }
 
     public static void main(String[] args) {
 
@@ -87,10 +89,29 @@ public class Main {
         // }
 
         // uncomment to make it work
-        KMeanClusteringModel model = new KMeanClusteringModel(articles, 5);
-        model.fitCentroids();
+        double max_precision = 0.0;
+        double max_recall = 0.0;
+        double max_f1_score = 0.0;
 
-        System.out.println(model.getWeightedPrecision(articles));
+        for(int iteration = 0; iteration < (Math.log(articles.getSize()) / Math.log(2)); iteration++){
+            KMeanClusteringModel model = new KMeanClusteringModel(articles, 5);
+            model.fitCentroids();
+
+            double curr_max_precision = model.getWeightedPrecision(articles);
+            double curr_max_recall = model.getWeightedRecall(articles);
+            double curr_f1_score = get_f1_score(curr_max_precision, curr_max_recall);
+
+            if(curr_f1_score > max_f1_score) {
+                max_precision = curr_max_precision;
+                max_recall = curr_max_recall;
+                max_f1_score = curr_f1_score;
+            }
+        }
+
+        System.out.println("FINAL MAX PRECISION: \t" + max_precision);
+        System.out.println("FINAL MAX RECALL: \t" + max_recall);
+        System.out.println("FINAL MAX F1-SCORE: \t" + max_f1_score);
+
 
         System.out.println("Ending...");
     }
