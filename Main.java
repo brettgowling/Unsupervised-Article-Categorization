@@ -14,7 +14,7 @@ public class Main {
 
         System.out.println("Starting..");
         // currently testing with demo data
-        articles = new DocumentCollection("learn-ai-bbc/testing.csv", "articles");
+        articles = new DocumentCollection("learn-ai-bbc/BBC News Train.csv", "articles");
         //articles = new DocumentCollection("learn-ai-bbc/BBC News Train.csv", "articles");
         //articles = new DocumentCollection("learn-ai-bbc/BBC News Test.csv", "articles");
 
@@ -106,6 +106,7 @@ public class Main {
                 max_recall = curr_max_recall;
                 max_f1_score = curr_f1_score;
             }
+            break;
         }
 
         System.out.println("FINAL MAX PRECISION: \t" + max_precision);
