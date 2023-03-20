@@ -1,13 +1,11 @@
-import javax.swing.text.Document;
-import java.sql.Array;
 import java.util.*;
 import java.util.Map.Entry;
 
 public class KMeanClusteringModel {
     DocumentCollection articles;
-    int k = 0;
-    HashMap<Integer, TextVector> centroids = new HashMap<>();
-    HashMap<Integer, ArrayList<ArticleVector>> clusterToArticles = new HashMap<>();
+    int k;
+    HashMap<Integer, TextVector> centroids;
+    HashMap<Integer, ArrayList<ArticleVector>> clusterToArticles;
 
     public KMeanClusteringModel(DocumentCollection articles, int k) {
         this.articles = articles;
@@ -34,22 +32,17 @@ public class KMeanClusteringModel {
             clusterToArticles.clear();
 
             for (ArticleVector myArticle : this.articles.getDocuments()) {
-                double closest_distance = 0;
+                double closest_distance = Double.MIN_VALUE;
                 int closest_cluster = -1;
-                double curr_distance = 0.0;
+                double curr_distance;
                 //System.out.println(i++);
                 //System.out.println("For Article " + myArticle.article_id + ":");
                 for (int cluster_num = 1; cluster_num <= this.k; cluster_num++) {
                     curr_distance = cosine.findDistance(myArticle, centroids.get(cluster_num), articles);
                     //System.out.println("Distance between Cluster #" + cluster_num + ": " + curr_distance);
-                    if (closest_distance == 0) {
+                    if (curr_distance > closest_distance) {
                         closest_distance = curr_distance;
                         closest_cluster = cluster_num;
-                    } else {
-                        if (curr_distance > closest_distance) {
-                            closest_distance = curr_distance;
-                            closest_cluster = cluster_num;
-                        }
                     }
                 }
                 if (clusterToArticles.containsKey(closest_cluster)) {
