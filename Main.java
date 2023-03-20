@@ -122,6 +122,7 @@ public class Main {
             KMeanClusteringModel model = new KMeanClusteringModel(articles, 5);
             model.fitCentroids();
 
+            //TODO: Shouldn't we be using testing data for these calculations?
             double curr_max_precision = model.getWeightedPrecision(articles);
             double curr_max_recall = model.getWeightedRecall(articles);
             double curr_f1_score = get_f1_score(curr_max_precision, curr_max_recall);
@@ -131,7 +132,6 @@ public class Main {
                 max_recall = curr_max_recall;
                 max_f1_score = curr_f1_score;
             }
-            break;
         }
 
         System.out.println("FINAL MAX PRECISION: \t" + max_precision);
