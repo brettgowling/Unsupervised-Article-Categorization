@@ -1,5 +1,5 @@
-CSC466-02 Winter 2023
-Brett Gowling, _____, ______
+CSC466-03 Winter 2023
+Brett Gowling, _____, Blake Silton
 
 This is the log.txt where we can update our individual tasks:
 
