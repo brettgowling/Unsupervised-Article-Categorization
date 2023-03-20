@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.*;
 import java.util.Map.Entry;
 
-public class KMeanClusteringModel {
+public class KMeanClusteringModel implements Serializable {
     DocumentCollection articles;
     int k;
     HashMap<Integer, TextVector> centroids;
