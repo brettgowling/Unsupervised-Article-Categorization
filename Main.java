@@ -10,11 +10,11 @@ public class Main {
      *                          Will serialize intermediate models from multiple iterations and then serialize the best
      *                          model.
      */
-    private static final boolean SERIALIZE_DOCUMENTS = false;
+    private static final boolean SERIALIZE_DOCUMENTS = true;
     private static final boolean SERIALIZE_MODELS = true;
 
     // Serialized object path constants
-    private static final String PATH_SERIALIZED_DIR = "serialized/";
+    private static final String PATH_SERIALIZED_DIR = "serialized" + File.separator;
     private static final String PATH_SERIALIZED_TRAINING_ARTICLE_COLLECTION =
             PATH_SERIALIZED_DIR + "train_articles_coln.bin";
     private static final String PATH_SERIALIZED_TESTING_ARTICLE_COLLECTION =
@@ -23,8 +23,8 @@ public class Main {
             PATH_SERIALIZED_DIR + "model_output_%s.bin";
 
     // File paths to different sets of data
-    private static final String PATH_TRAINING_DATA = "learn-ai-bbc/BBC News Train.csv";
-    private static final String PATH_TESTING_DATA = "learn-ai-bbc/BBC News Test.csv";
+    private static final String PATH_TRAINING_DATA = "learn-ai-bbc" + File.separator + "BBC News Train.csv";
+    private static final String PATH_TESTING_DATA = "learn-ai-bbc" + File.separator + "BBC News Test.csv";
 
     public static DocumentCollection articles;
 
@@ -180,10 +180,13 @@ public class Main {
 
     /* Method to serialize a provided object to the specified path. */
     private static void serialize(Object obj, String outputPath) {
+        File outFile = new File(outputPath);
+        outFile.getParentFile().mkdirs();  //Create new file if one does not already exist
         try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(outputPath))) {
             os.writeObject(obj);
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
+            System.exit(1);
         }
     }
 
@@ -193,11 +196,11 @@ public class Main {
             obj = is.readObject();
         } catch (FileNotFoundException e) {
             System.out.printf("Tried to load object from path \"%s\", but file wasn't found. ", pathToLoadFrom);
-            System.out.println("Try running with global variable SERIALIZE set to true.");
-            System.out.println(e);
+            System.out.println("Try running with relevant SERIALIZE constant set to true.");
+            e.printStackTrace();
             System.exit(1);
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
             System.exit(1);
         }
         return obj;
