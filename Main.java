@@ -1,8 +1,18 @@
-import java.security.KeyStore.Entry;
-import java.util.*;
+import java.io.*;
 
-import javax.swing.text.html.parser.Entity;
 public class Main {
+
+    /* Boolean to indicate whether to generate and serialize a new DocumentCollection for the specified csv file.
+     * Best practice is to serialize a new DocumentCollection the first time checking out the repo on a new machine.
+     */
+    private static final boolean SERIALIZE = false;
+    // Serialized object path constants
+    private static final String PATH_SERIALIZED_TRAINING_ARTICLE_COLLECTION = "serialized/train_articles_coln.bin";
+    private static final String PATH_SERIALIZED_TESTING_ARTICLE_COLLECTION = "serialized/test_articles_coln.bin";
+
+    // File paths to different sets of data
+    private static final String PATH_TRAINING_DATA = "learn-ai-bbc/BBC News Train.csv";
+    private static final String PATH_TESTING_DATA = "learn-ai-bbc/BBC News Test.csv";
 
     public static DocumentCollection articles;
 
@@ -12,13 +22,29 @@ public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("Starting..");
-        // currently testing with demo data
-        articles = new DocumentCollection("learn-ai-bbc/BBC News Train.csv", "articles");
-        //articles = new DocumentCollection("learn-ai-bbc/BBC News Test.csv", "articles");
+        System.out.println("Starting...");
 
+        // Set runtime values from constants
+        String dataPath = PATH_TRAINING_DATA;
+        String serializedDocCollectionPath = PATH_SERIALIZED_TRAINING_ARTICLE_COLLECTION;
 
-        articles.normalize(articles);
+//        String dataPath = PATH_TESTING_DATA;
+//        String serializedDocCollectionPath = PATH_SERIALIZED_TESTING_ARTICLE_COLLECTION;
+
+        // Load DocumentCollection from memory to save time, or create one if specified or doesn't exist
+        if (SERIALIZE) {
+            System.out.printf("Generating new DocumentCollection from: %s\n", dataPath);
+            articles = new DocumentCollection(dataPath, "articles");
+
+            System.out.println("Normalizing articles...");
+            articles.normalize(articles);
+
+            System.out.printf("Serializing DocumentCollection to: %s\n", serializedDocCollectionPath);
+            serialize(articles, serializedDocCollectionPath);
+        } else {
+            System.out.printf("Reading DocumentCollection from %s\n", serializedDocCollectionPath);
+            articles = (DocumentCollection) load(serializedDocCollectionPath);
+        }
 
         // HashMap<Integer, ArrayList<Integer>> articleToCluster = new HashMap<>();
         // HashMap<Integer, TextVector> myClusters = new HashMap<>();
@@ -92,7 +118,7 @@ public class Main {
         double max_recall = 0.0;
         double max_f1_score = 0.0;
 
-        for(int iteration = 0; iteration < (Math.log(articles.getSize()) / Math.log(2)); iteration++){
+        for (int iteration = 0; iteration < (Math.log(articles.getSize()) / Math.log(2)); iteration++){
             KMeanClusteringModel model = new KMeanClusteringModel(articles, 5);
             model.fitCentroids();
 
@@ -116,5 +142,28 @@ public class Main {
         System.out.println("Ending...");
     }
 
+    /* Method to serialize a provided object to the specified path. */
+    private static void serialize(Object obj, String outputPath) {
+        try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(outputPath))) {
+            os.writeObject(obj);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 
+    private static Object load(String pathToLoadFrom) {
+        Object obj = null;
+        try (ObjectInputStream is = new ObjectInputStream(new FileInputStream(pathToLoadFrom))) {
+            obj = is.readObject();
+        } catch (FileNotFoundException e) {
+            System.out.printf("Tried to load object from path \"%s\", but file wasn't found. ", pathToLoadFrom);
+            System.out.println("Try running with global variable SERIALIZE set to true.");
+            System.out.println(e);
+            System.exit(1);
+        } catch (Exception e) {
+            System.out.println(e);
+            System.exit(1);
+        }
+        return obj;
+    }
 }
