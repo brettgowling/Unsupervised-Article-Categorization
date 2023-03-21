@@ -1,5 +1,5 @@
 CSC466-03 Winter 2023
-Brett Gowling, _____, Blake Silton
+Brett Gowling, Saurav Gupta, Blake Silton
 
 This is the log.txt where we can update our individual tasks.
 The entries are in the following format:
@@ -31,11 +31,17 @@ Brett:
 
 Saurav:
 
-    1.
+    1. 2 Hrs || Updated Centroids Calculation || The code includes a function named getUpdatedCentroids which is 
+        designed to compute the updated centroids. These centroids are derived from the ArticleVectors that are
+        associated with clusters ranging from 1 to k.
 
-    2.
+    2. 2 Hrs || Compairing two Centroids || Created a mthod to compare two centroids based on their axis values. 
+        The method iterates through the provided two centroids and checks if there is any difference between them. 
+        If no difference is found, it indicates that both centroids are identical.
 
-    3.
+    3. 1 Hrs || Developed a method to examine the distribution of categories once the centroid updating loop is
+        completed. This analysis allows us to evaluate the effectiveness of the centroids that were calculated based 
+        on a random initial selection.
 
 
 Blake:
