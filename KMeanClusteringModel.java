@@ -148,7 +148,8 @@ public class KMeanClusteringModel implements Serializable {
             int FP = 0;
             for(int i = 0; i < cluster.size(); i++){
                 for(int j = i + 1; j < cluster.size(); j++){
-                    if(Objects.equals(((ArticleVector) articles.getDocumentById(cluster.get(i).article_id)).getLabel(), ((ArticleVector) articles.getDocumentById(cluster.get(j).article_id)).getLabel())){
+                    if(Objects.equals(((ArticleVector) articles.getDocumentById(cluster.get(i).article_id)).getLabel(),
+                                      ((ArticleVector) articles.getDocumentById(cluster.get(j).article_id)).getLabel())){
                         TP += 1;
                     }
                     else{

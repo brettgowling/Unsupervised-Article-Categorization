@@ -132,8 +132,6 @@ public class Main {
                 model.fitCentroids();
                 models.add(model);
                 serialize(model, String.format(PATH_SERIALIZED_MODEL_FORMAT_STRING, iteration));
-
-                break; //FIXME: force single iteration, so we only generate one model
             }
         } else {  // Read models from serialized objects
             File serializedDir = new File(PATH_SERIALIZED_DIR);
