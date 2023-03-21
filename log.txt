@@ -1,16 +1,32 @@
 CSC466-03 Winter 2023
 Brett Gowling, _____, Blake Silton
 
-This is the log.txt where we can update our individual tasks:
+This is the log.txt where we can update our individual tasks.
+The entries are in the following format:
 
+Team Member:
+
+    1. Time Spent || Task #1 Title || Task #1 Description
+    2. Time Spent || Task #2 Title || Task #2 Description
+    ...
+
+----------------------------------------------------------------
 
 Brett:
 
-    1.
+    1. 0.75 Hrs || Input Parsing || The BBC Article Input needed to be parsed so that DocumentVectors could be created.
+        The parsing consisted of splitting on the comma in the file's lines, as the format was a CSV, and each line in
+        the file was a new document.
 
-    2.
+    2. 1.5 Hrs || ArticleVector Creation || The original implementation of the TextVector Abstract needed to be
+        implemented by a new class, ArticleVector. This class was then adapted to fit the needs of this project, storing
+        relevant data like its label and text.
 
-    3.
+    3. 3.5 Hrs || Find Closest Cluster || This is one of the larger sections of the project, as it required full
+        iterations through the dataset to determine which cluster the current document was closest to.
+
+    4. 1.0 Hrs || Performance Metrics || Using techniques learned in class, the precision, recall, and f1-scores were
+        calculated given a hashmap of clusters.
 
 
 Saurav:
@@ -29,4 +45,3 @@ Blake:
     2.
 
     3.
-    
