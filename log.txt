@@ -35,7 +35,7 @@ Saurav:
         designed to compute the updated centroids. These centroids are derived from the ArticleVectors that are
         associated with clusters ranging from 1 to k.
 
-    2. 2 Hrs || Compairing two Centroids || Created a mthod to compare two centroids based on their axis values. 
+    2. 2 Hrs || Comparing two Centroids || Created a method to compare two centroids based on their axis values.
         The method iterates through the provided two centroids and checks if there is any difference between them. 
         If no difference is found, it indicates that both centroids are identical.
 
@@ -46,8 +46,12 @@ Saurav:
 
 Blake:
 
-    1.
+    1. 1 Hrs || Design Work || Worked directly with Brett and Saurav to troubleshoot project organization issues and
+        cooperatively create solutions from adjustment of scalar calculation to project redesigns.
 
-    2.
+    2. 2 Hrs || Refactoring Main || Adjusted the functionality of Main to include options to serialize generated objects
+        to save time with further development. Developed methods to serialize and load objects easily.
 
-    3.
+    3. 3 Hrs || Efficiency Exploration || Looked into methods we could use to make model training more efficient and
+        faster. Explored different organizations and calculations but settled on cluster consistency to avoid complete
+        refactor.
